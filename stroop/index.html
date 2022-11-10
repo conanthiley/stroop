@@ -1,0 +1,184 @@
+
+<html>
+  <head>
+    <title>Stroop Test</title>
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.js"
+      integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    
+    <canvas id="canvas" width="600px" height="600px"></canvas>
+    <p class="experiment">Experiment Type:</p>
+    <p id="experiment-type">dhsdfa</p>
+    <script>
+      const words = ["green", "blue", "red"];
+      //   const colors = ["#00FF00", "#0000FF", "#FF0000"];
+      const colors = ["green", "blue", "red"];
+
+      //   const experimentType =
+      //     document.querySelector(".experiment-type").textContent;
+      //   console.log(experimentType);
+
+      let msSinceChange = 0;
+      let trials = 5;
+      let trialNum = 0;
+      let trialNum2 = 0;
+      let trialDataColor = [];
+      let trialDataWord = [];
+
+      function getRandom(items) {
+        return items[Math.floor(Math.random() * items.length)];
+      }
+
+      function clearCanvas() {
+        window.ctx.clearRect(0, 0, window.canvas.width, window.canvas.height);
+      }
+
+      function writeText(text, color = "#000000") {
+        clearCanvas();
+        window.ctx.fillStyle = color;
+        window.ctx.fillText(
+          text,
+          window.canvas.width / 2,
+          window.canvas.height / 2
+        );
+      }
+
+      function nextSection() {
+        writeText("end of Section 1");
+        console.log("end of Section 1");
+      }
+      // $(document).keypress(function (e) {
+      //   if (e.keyCode == 32) {
+      //     displayTrialNonCongruent();
+      //   }
+      // });
+
+      // $(document).keypress(function (e) {
+      //     writeText("Section 2: Non Congruent");
+      //   }
+      //   $(document).keypress(function (e) {
+      //     writeText("Section 2: Non Congruent");
+      //     if (e.keyCode == 103 || e.keyCode == 98 || e.keyCode == 114) {
+      //       displayTrialNonCongruent();
+      //     }
+      //   });
+      function wordHelper(word, color) {
+        $(document).keypress(function (e) {
+          if (e.keyCode == 103) {
+            trialDataColor.push(color);
+            trialDataWord.push(word);
+            time = Date.now();
+            console.log(
+              `color: ${trialDataColor[0]}, word: ${trialDataWord[0]} time: ${time}`
+            );
+            // console.log(trialData);
+          }
+          if (e.keyCode == 98) {
+            trialDataColor.push(color);
+            trialDataWord.push(word);
+            time = Date.now();
+            console.log(
+              `color: ${trialDataColor[0]}, word: ${trialDataWord[0]} time: ${time}`
+            );
+            // console.log(trialData);
+          }
+          if (e.keyCode == 114) {
+            trialDataColor.push(color);
+            trialDataWord.push(word);
+            time = Date.now();
+            console.log(
+              `color: ${trialDataColor[0]}, word: ${trialDataWord[0]} time: ${time}`
+            );
+            // console.log(trialData);
+          }
+        });
+      }
+      function endExperiment() {
+        writeText("Fin");
+      }
+      //complete dont touch
+      function displayTrialCongruent() {
+        trialNum = trialNum + 1;
+        document.getElementById("experiment-type").innerHTML = "Congruent";
+        if (trialNum >= trials) {
+          displayTrialNonCongruent2();
+        } else {
+          clearCanvas();
+          //test
+          console.log(trialNum);
+
+          wordCol = getRandom(words);
+
+          writeText(wordCol, wordCol);
+          wordHelper(wordCol, wordCol);
+        }
+      }
+      function displayTrialNonCongruent2() {
+        trialNum2 = trialNum2 + 1;
+        if (trialNum2 >= trials) {
+          endExperiment();
+        } else {
+          clearCanvas();
+          document.getElementById("experiment-type").innerHTML = "NonCongruent";
+          console.log(trialNum2);
+          console.log(trialNum);
+          word = getRandom(words);
+          color = getRandom(words);
+          writeText(word, color);
+          wordHelper(word, color);
+        }
+      }
+      //complete dont touch
+      function displayTrialNonCongruent() {
+        trialNum = trialNum + 1;
+
+        document.getElementById("experiment-type").innerHTML = "Non Congruent";
+        clearCanvas();
+        console.log(trialNum);
+        word = getRandom(words);
+        color = getRandom(words);
+        writeText(word, color);
+        wordHelper(word, color);
+      }
+
+      //complete dont touch
+      function setup() {
+        window.canvas = document.getElementById("canvas");
+        window.ctx = window.canvas.getContext("2d");
+        window.ctx.font = "16px Arial";
+        window.ctx.textAlign = "center";
+      }
+
+      //complete dont touch
+      function instructions() {
+        writeText(
+          "Part 1: press the corresponding letter to the color of each word. Press 'g' for 'green, 'r' for red and 'b' for blue. Press 'Space' to start"
+        );
+        $(document).keypress(function (e) {
+          if (e.keyCode == 103 || e.keyCode == 98 || e.keyCode == 114) {
+            // displayTrial();
+
+            // displayTrialNonCongruent();
+            displayTrialCongruent();
+          }
+        });
+      }
+
+      function main() {
+        setup();
+        instructions();
+      }
+
+      $(window).on("load", main);
+    </script>
+    <style>
+      #canvas {
+        border: 2px solid black;
+      }
+    </style>
+  </body>
+</html>

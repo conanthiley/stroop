@@ -1,0 +1,7 @@
+todo for november 8th:
+1. make sure there are no overlapping colors and words.
+2. fix innerHTML to show experient type. -------------- x
+3. at space bar press and instruction between experiemnt types.
+
+make version with mouse
+double check spelling 
